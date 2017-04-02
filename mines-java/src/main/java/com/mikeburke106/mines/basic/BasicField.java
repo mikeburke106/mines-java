@@ -1,7 +1,7 @@
-package java.com.mikeburke106.mines.basic;
+package com.mikeburke106.mines.basic;
 
-import java.com.mikeburke106.mines.model.Field;
-import java.com.mikeburke106.mines.model.Position;
+import com.mikeburke106.mines.model.Field;
+import com.mikeburke106.mines.model.Position;
 import java.util.Set;
 
 /*

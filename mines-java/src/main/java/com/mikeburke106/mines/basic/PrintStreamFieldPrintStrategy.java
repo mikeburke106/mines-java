@@ -1,8 +1,8 @@
-package java.com.mikeburke106.mines.basic;
+package com.mikeburke106.mines.basic;
 
-import java.com.mikeburke106.mines.model.Field;
-import java.com.mikeburke106.mines.model.FieldPrintStrategy;
-import java.com.mikeburke106.mines.model.Position;
+import com.mikeburke106.mines.model.Field;
+import com.mikeburke106.mines.model.FieldPrintStrategy;
+import com.mikeburke106.mines.model.Position;
 import java.io.PrintStream;
 
 /**
@@ -10,10 +10,10 @@ import java.io.PrintStream;
  * <p>
  * Created by Mike Burke on 4/1/17.
  */
-public class TextFieldPrintStrategy implements FieldPrintStrategy {
+public class PrintStreamFieldPrintStrategy implements FieldPrintStrategy {
     private final PrintStream outStream;
 
-    public TextFieldPrintStrategy(PrintStream outStream) {
+    public PrintStreamFieldPrintStrategy(PrintStream outStream) {
         this.outStream = outStream;
     }
 

@@ -1,7 +1,6 @@
-package java.com.mikeburke106.mines.basic;
+package com.mikeburke106.mines.basic;
 
-import javax.naming.OperationNotSupportedException;
-import java.com.mikeburke106.mines.model.Position;
+import com.mikeburke106.mines.model.Position;
 import java.util.Iterator;
 
 /*
@@ -75,7 +74,7 @@ public class BasicPositionPool implements Position.Pool {
 
         @Override
         public boolean hasNext() {
-            return currX >= positionPool.width();
+            return currX < positionPool.width();
         }
 
         @Override

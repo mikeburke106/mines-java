@@ -1,4 +1,4 @@
-package java.com.mikeburke106.mines.model;
+package com.mikeburke106.mines.model;
 
 /*
  * This file is subject to the terms and conditions defined in

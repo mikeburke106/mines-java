@@ -1,6 +1,6 @@
-package java.com.mikeburke106.mines.basic;
+package com.mikeburke106.mines.basic;
 
-import java.com.mikeburke106.mines.model.Position;
+import com.mikeburke106.mines.model.Position;
 
 /*
  * This file is subject to the terms and conditions defined in
@@ -30,6 +30,11 @@ public class BasicPosition implements Position {
     @Override
     public int y() {
         return this.y;
+    }
+
+    @Override
+    public String toString() {
+        return "(" + x + ", " + y + ")";
     }
 
     /**

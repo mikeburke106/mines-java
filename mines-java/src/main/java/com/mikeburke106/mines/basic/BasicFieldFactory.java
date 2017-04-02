@@ -1,7 +1,7 @@
-package java.com.mikeburke106.mines.basic;
+package com.mikeburke106.mines.basic;
 
-import java.com.mikeburke106.mines.model.Field;
-import java.com.mikeburke106.mines.model.Position;
+import com.mikeburke106.mines.model.Field;
+import com.mikeburke106.mines.model.Position;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,7 +39,9 @@ public class BasicFieldFactory implements Field.Factory {
 
         for (int i = 0; i < configuration.numMines(); i++) {
             try {
-                minePositions.add(positionProvider.nextPosition());
+                Position position = positionProvider.nextPosition();
+                minePositions.add(position);
+                System.out.println("Mine planted at position: " + position);
             } catch (Position.Provider.NoPositionsAvailableException e) {
                 /* should be impossible since we validated inputs, so something is clearly wrong with the point provider */
                 throw new RuntimeException("Something is wrong with the input PositionProvider.", e);
