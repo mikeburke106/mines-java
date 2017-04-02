@@ -1,6 +1,7 @@
 package com.mikeburke106.mines.basic;
 
 import com.mikeburke106.mines.model.Position;
+
 import java.util.Iterator;
 
 /*
@@ -84,15 +85,15 @@ public class BasicPositionPool implements Position.Pool {
             return next;
         }
 
-        private void increment(){
+        private void increment() {
             currY++;
-            if(endOfRow()){
+            if (endOfRow()) {
                 currX++;
                 currY = 0;
             }
         }
 
-        private boolean endOfRow(){
+        private boolean endOfRow() {
             return currY == positionPool.height();
         }
 

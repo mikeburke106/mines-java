@@ -3,10 +3,10 @@ package com.mikeburke106.mines.basic;
 import com.mikeburke106.mines.model.Field;
 import com.mikeburke106.mines.model.Position;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+/*
+ * This file is subject to the terms and conditions defined in
+ * file 'LICENSE.txt', which is part of this source code package.
+ */
 
 /**
  * A basic, terminal-based minesweeper application.
@@ -25,7 +25,7 @@ public class TextMinesweeperApplication {
         Field.Configuration configuration = new BasicConfiguration(positionPool, FIELD_NUM_MINES);
 
         // continuously generate new fields with the given information
-        while(true) {
+        while (true) {
             System.out.println("\n\nNew field:\n");
             Field field = fieldfactory.newInstance(configuration);
             new PrintStreamFieldPrintStrategy(System.out).printField(field);

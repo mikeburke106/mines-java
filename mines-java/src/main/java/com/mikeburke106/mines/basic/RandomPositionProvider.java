@@ -1,7 +1,10 @@
 package com.mikeburke106.mines.basic;
 
 import com.mikeburke106.mines.model.Position;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /*
  * This file is subject to the terms and conditions defined in

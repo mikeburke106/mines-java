@@ -3,7 +3,13 @@ package com.mikeburke106.mines.basic;
 import com.mikeburke106.mines.model.Field;
 import com.mikeburke106.mines.model.FieldPrintStrategy;
 import com.mikeburke106.mines.model.Position;
+
 import java.io.PrintStream;
+
+/*
+ * This file is subject to the terms and conditions defined in
+ * file 'LICENSE.txt', which is part of this source code package.
+ */
 
 /**
  * Prints the field out to text.

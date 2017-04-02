@@ -24,7 +24,7 @@ public interface Position {
     /**
      * An interface for a pool of position objects.
      */
-    interface Pool extends Iterable<Position>{
+    interface Pool extends Iterable<Position> {
         /**
          * @param x The x position
          * @param y The y position

@@ -1,6 +1,7 @@
 package com.mikeburke106.mines.basic;
 
 import com.mikeburke106.mines.model.Position;
+
 import java.util.List;
 
 /*
