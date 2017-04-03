@@ -28,15 +28,15 @@ public class PrintStreamFieldPrintStrategy implements FieldPrintStrategy {
         final Field.Configuration fieldConfiguration = field.configuration();
         final Position.Pool positionPool = fieldConfiguration.positionPool();
         final int width = positionPool.width();
-        final int height = positionPool.height();
 
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                final Position position = positionPool.atLocation(x, y);
-                final String positionText = field.isMine(position) ? "[x]" : "[ ]";
-                outStream.print(positionText);
+        int index = 0;
+        for (Position position : positionPool) {
+            final String positionText = field.isMine(position) ? "[x]" : "[ ]";
+            outStream.print(positionText);
+            index++;
+            if ((index % width) == 0) {
+                outStream.print("\n");
             }
-            outStream.print("\n");
         }
     }
 }

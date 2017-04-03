@@ -54,7 +54,7 @@ public class BasicPositionPool implements Position.Pool {
     }
 
     private static int indexForCoordinate(int width, int x, int y) {
-        return (width * x) + y;
+        return (width * y) + x;
     }
 
     @Override
@@ -75,7 +75,7 @@ public class BasicPositionPool implements Position.Pool {
 
         @Override
         public boolean hasNext() {
-            return currX < positionPool.width();
+            return currY < positionPool.height();
         }
 
         @Override
@@ -86,15 +86,15 @@ public class BasicPositionPool implements Position.Pool {
         }
 
         private void increment() {
-            currY++;
+            currX++;
             if (endOfRow()) {
-                currX++;
-                currY = 0;
+                currY++;
+                currX = 0;
             }
         }
 
         private boolean endOfRow() {
-            return currY == positionPool.height();
+            return currX == positionPool.width();
         }
 
         @Override
