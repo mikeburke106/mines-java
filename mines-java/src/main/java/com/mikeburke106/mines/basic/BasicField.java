@@ -3,6 +3,9 @@ package com.mikeburke106.mines.basic;
 import com.mikeburke106.mines.model.Field;
 import com.mikeburke106.mines.model.Position;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
 /*
@@ -57,6 +60,16 @@ public class BasicField implements Field {
     @Override
     public boolean isMine(Position position) {
         return this.mines.contains(position);
+    }
+
+    @Override
+    public String toString() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(outputStream);
+        PrintStreamFieldPrintStrategy printer = new PrintStreamFieldPrintStrategy(printStream);
+        printer.printField(this);
+        return new String(outputStream.toByteArray(), StandardCharsets.UTF_8);
+
     }
 }
 

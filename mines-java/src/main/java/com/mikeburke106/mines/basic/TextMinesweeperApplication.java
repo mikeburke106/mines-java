@@ -36,6 +36,6 @@ public class TextMinesweeperApplication {
 
         System.out.println("\n\nNew field: (" + width + "x" + height + "), " + numMines + " mines\n");
         Field field = fieldfactory.newInstance(configuration);
-        new PrintStreamFieldPrintStrategy(System.out).printField(field);
+        System.out.println(field.toString());
     }
 }

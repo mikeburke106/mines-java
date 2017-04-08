@@ -1,4 +1,3 @@
-
 apply plugin: 'java'
 apply plugin: 'application'
 
@@ -12,7 +11,16 @@ sourceSets {
 
 mainClassName = 'com.mikeburke106.mines.basic.TextMinesweeperApplication'
 
-task updateWrapper(type: Wrapper){
+task updateWrapper(type: Wrapper) {
     gradleVersion = '3.4.1'
 }
 
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile "com.fasterxml.jackson.core:jackson-core:2.8.7"
+    compile "com.fasterxml.jackson.core:jackson-annotations:2.8.7"
+    compile "com.fasterxml.jackson.core:jackson-databind:2.8.7"
+}
