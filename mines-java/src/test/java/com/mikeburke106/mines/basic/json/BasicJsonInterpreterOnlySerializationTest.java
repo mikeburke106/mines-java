@@ -17,21 +17,15 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by Mike Burke on 4/8/17.
  */
-public class BasicJsonInterpreterTest {
+public class BasicJsonInterpreterOnlySerializationTest {
     private static final int TEST_INTEGER = 1248;
     private static final String TEST_INTEGER_JSON = "{\"integer\":1248}";
 
     static class TestJson {
         @JsonProperty
-        int integer;
+        private int integer;
 
-        public TestJson() {
-            /*
-             * Do nothing.  Needed for Jackson deserialization.
-             */
-        }
-
-        TestJson(int integer) {
+        public TestJson(int integer) {
             this.integer = integer;
         }
     }
@@ -40,7 +34,7 @@ public class BasicJsonInterpreterTest {
 
     @Before
     public void setup() {
-        basicJsonInterpreter = new BasicJsonInterpreter<>(TestJson.class);
+        basicJsonInterpreter = new BasicJsonInterpreter<>();
     }
 
     @Test
@@ -49,9 +43,8 @@ public class BasicJsonInterpreterTest {
         assertEquals(TEST_INTEGER_JSON, jsonString);
     }
 
-    @Test
+    @Test(expected = UnsupportedOperationException.class)
     public void testDeserialization() throws IOException {
-        TestJson testJsonObject = basicJsonInterpreter.fromJson(TEST_INTEGER_JSON);
-        assertEquals(TEST_INTEGER, testJsonObject.integer);
+        basicJsonInterpreter.fromJson(TEST_INTEGER_JSON); // UnsupportedOperationException
     }
 }

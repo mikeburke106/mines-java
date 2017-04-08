@@ -3,6 +3,11 @@ package com.mikeburke106.mines.basic;
 import com.mikeburke106.mines.model.Field;
 import com.mikeburke106.mines.model.Game;
 
+/*
+ * This file is subject to the terms and conditions defined in
+ * file 'LICENSE.txt', which is part of this source code package.
+ */
+
 /**
  * Created by Mike Burke on 4/8/17.
  */

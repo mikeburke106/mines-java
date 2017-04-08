@@ -3,6 +3,11 @@ package com.mikeburke106.mines.basic.json;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mikeburke106.mines.basic.BasicConfiguration;
 
+/*
+ * This file is subject to the terms and conditions defined in
+ * file 'LICENSE.txt', which is part of this source code package.
+ */
+
 /**
  * Defines a configuration in JSON format.
  * <p>
@@ -44,5 +49,25 @@ public class BasicConfigurationJson {
 
     public int numMines() {
         return numMines;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BasicConfigurationJson that = (BasicConfigurationJson) o;
+
+        if (width != that.width) return false;
+        if (height != that.height) return false;
+        return numMines == that.numMines;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = width;
+        result = 31 * result + height;
+        result = 31 * result + numMines;
+        return result;
     }
 }

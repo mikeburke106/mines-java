@@ -15,23 +15,22 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by Mike Burke on 4/8/17.
  */
-public class BasicConfigurationJsonSerializeTest {
-    private static final int WIDTH = 204;
-    private static final int HEIGHT = 914;
-    private static final int NUM_MINES = 184;
-    private static final String EXPECTED_JSON = "{\"width\":204,\"height\":914,\"numMines\":184}";
+public class BasicPositionJsonSerializeTest {
+    private static final int X = 0;
+    private static final int Y = 9;
+    private static final String EXPECTED_JSON = "{\"x\":0,\"y\":9}";
 
-    private BasicConfigurationJson basicConfigurationJson;
+    private BasicPositionJson basicPositionJson;
 
     @Before
     public void setup() {
-        basicConfigurationJson = new BasicConfigurationJson(WIDTH, HEIGHT, NUM_MINES);
+        basicPositionJson = new BasicPositionJson(X, Y);
     }
 
     @Test
     public void testSerialize() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        String jsonString = mapper.writeValueAsString(basicConfigurationJson);
+        String jsonString = mapper.writeValueAsString(basicPositionJson);
         assertEquals(EXPECTED_JSON, jsonString);
     }
 }

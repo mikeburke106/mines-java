@@ -4,6 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.io.IOException;
 
+/*
+ * This file is subject to the terms and conditions defined in
+ * file 'LICENSE.txt', which is part of this source code package.
+ */
+
 /**
  * Definition of interpreting POJOs to and from JSON strings.
  * <p>
