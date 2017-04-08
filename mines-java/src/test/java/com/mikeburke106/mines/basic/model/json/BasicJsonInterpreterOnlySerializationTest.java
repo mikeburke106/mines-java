@@ -1,4 +1,4 @@
-package com.mikeburke106.mines.basic.json;
+package com.mikeburke106.mines.basic.model.json;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;

@@ -1,4 +1,4 @@
-package com.mikeburke106.mines.basic;
+package com.mikeburke106.mines.basic.model;
 
 import com.mikeburke106.mines.model.Field;
 import com.mikeburke106.mines.model.Game;
@@ -9,6 +9,8 @@ import com.mikeburke106.mines.model.Game;
  */
 
 /**
+ * Basic implementation of a Game.
+ * <p>
  * Created by Mike Burke on 4/8/17.
  */
 public class BasicGame implements Game {

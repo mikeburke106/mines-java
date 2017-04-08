@@ -6,10 +6,28 @@ package com.mikeburke106.mines.model;
  */
 
 /**
- *
- *
  * Created by Mike Burke on 4/8/17.
  */
 public interface GameControlStrategy {
-    void newGame();
+    interface Listener {
+        enum PositionAction {
+            CLEAR,
+            EXPLODE,
+            FLAG,
+            UNFLAG,;
+        }
+
+        void positionUpdate(PositionAction positionAction, int x, int y);
+
+        void timeUpdate(long time);
+
+        void gameWon();
+
+        void gameLost();
+    }
+
+    void clear(int x, int y);
+
+    void toggleFlag(int x, int y);
+
 }

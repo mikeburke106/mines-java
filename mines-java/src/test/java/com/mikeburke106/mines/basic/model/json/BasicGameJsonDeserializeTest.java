@@ -1,10 +1,10 @@
-package com.mikeburke106.mines.basic.json;
+package com.mikeburke106.mines.basic.model.json;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by Mike Burke on 4/8/17.
  */
-public class BasicGameJsonSerializeTest {
+public class BasicGameJsonDeserializeTest {
     private static final long GAME_START_TIME = 1234567890L;
     private static final long ELAPSED_TIME = 17L;
     private static final int WIDTH = 4;
@@ -38,11 +38,8 @@ public class BasicGameJsonSerializeTest {
     private List<BasicPositionJson> flagsJson;
     private List<BasicPositionJson> clearedJson;
 
-    private BasicGameJson basicGameJson;
-
     @Before
-    public void setup() {
-        BasicConfigurationJson configurationJson = new BasicConfigurationJson(WIDTH, HEIGHT, NUM_MINES);
+    public void setup(){
         minesJson = Arrays.asList(
                 new BasicPositionJson(0, 1),
                 new BasicPositionJson(0, 2),
@@ -64,14 +61,33 @@ public class BasicGameJsonSerializeTest {
                 new BasicPositionJson(2, 2),
                 new BasicPositionJson(3, 0)
         );
-
-        basicGameJson = new BasicGameJson(GAME_START_TIME, ELAPSED_TIME, configurationJson, minesJson, flagsJson, clearedJson);
     }
 
     @Test
-    public void testSerialize() throws JsonProcessingException {
+    public void testDeserialize() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        String jsonString = mapper.writeValueAsString(basicGameJson);
-        assertEquals(EXPECTED_JSON, jsonString);
+        BasicGameJson basicGameJson = mapper.readValue(EXPECTED_JSON, BasicGameJson.class);
+
+        assertEquals(GAME_START_TIME, basicGameJson.gameCreateTime());
+        assertEquals(ELAPSED_TIME, basicGameJson.elapsedTime());
+
+        assertConfigurationEquals(basicGameJson.configuration());
+        assertPositionListEquals(minesJson, basicGameJson.mines());
+        assertPositionListEquals(flagsJson, basicGameJson.flags());
+        assertPositionListEquals(clearedJson, basicGameJson.cleared());
+    }
+
+    private void assertPositionListEquals(List<BasicPositionJson> expectedList, List<BasicPositionJson> actualList) {
+        assertEquals(expectedList.size(), actualList.size());
+
+        for(int i=0; i<expectedList.size(); i++){
+            assertEquals(expectedList.get(i), actualList.get(i));
+        }
+    }
+
+    private void assertConfigurationEquals(BasicConfigurationJson configuration) {
+        assertEquals(WIDTH, configuration.width());
+        assertEquals(HEIGHT, configuration.height());
+        assertEquals(NUM_MINES, configuration.numMines());
     }
 }

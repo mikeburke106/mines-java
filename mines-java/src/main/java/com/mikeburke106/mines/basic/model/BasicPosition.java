@@ -1,4 +1,4 @@
-package com.mikeburke106.mines.basic;
+package com.mikeburke106.mines.basic.model;
 
 import com.mikeburke106.mines.model.Position;
 

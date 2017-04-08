@@ -1,7 +1,7 @@
-package com.mikeburke106.mines.basic.json;
+package com.mikeburke106.mines.basic.model.json;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mikeburke106.mines.basic.BasicPosition;
+import com.mikeburke106.mines.basic.model.BasicPosition;
 
 /*
  * This file is subject to the terms and conditions defined in

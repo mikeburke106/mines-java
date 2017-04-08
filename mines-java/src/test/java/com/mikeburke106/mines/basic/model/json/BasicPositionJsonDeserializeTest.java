@@ -1,4 +1,4 @@
-package com.mikeburke106.mines.basic.json;
+package com.mikeburke106.mines.basic.model.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
