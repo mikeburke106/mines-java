@@ -19,13 +19,15 @@ import static org.junit.Assert.assertEquals;
  * Created by Mike Burke on 4/8/17.
  */
 public class BasicGameJsonSerializeTest {
-    private static final long TIME_PLAYED = 17;
+    private static final long GAME_START_TIME = 1234567890L;
+    private static final long ELAPSED_TIME = 17L;
     private static final int WIDTH = 4;
     private static final int HEIGHT = 4;
     private static final int NUM_MINES = 6;
     private static final String EXPECTED_JSON =
             "{" +
-                    "\"timePlayed\":17," +
+                    "\"gameCreateTime\":1234567890," +
+                    "\"elapsedTime\":17," +
                     "\"configuration\":{\"width\":4,\"height\":4,\"numMines\":6}," +
                     "\"mines\":[{\"x\":0,\"y\":1},{\"x\":0,\"y\":2},{\"x\":1,\"y\":2},{\"x\":1,\"y\":3},{\"x\":2,\"y\":0},{\"x\":2,\"y\":3}]," +
                     "\"flags\":[{\"x\":1,\"y\":2},{\"x\":2,\"y\":0},{\"x\":3,\"y\":1}]," +
@@ -63,7 +65,7 @@ public class BasicGameJsonSerializeTest {
                 new BasicPositionJson(3, 0)
         );
 
-        basicGameJson = new BasicGameJson(TIME_PLAYED, configurationJson, minesJson, flagsJson, clearedJson);
+        basicGameJson = new BasicGameJson(GAME_START_TIME, ELAPSED_TIME, configurationJson, minesJson, flagsJson, clearedJson);
     }
 
     @Test

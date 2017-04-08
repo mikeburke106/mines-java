@@ -16,7 +16,10 @@ import java.util.List;
  */
 public class BasicGameJson {
     @JsonProperty
-    private long timePlayed;
+    private long gameCreateTime;
+
+    @JsonProperty
+    private long elapsedTime;
 
     @JsonProperty
     private BasicConfigurationJson configuration;
@@ -36,17 +39,22 @@ public class BasicGameJson {
          */
     }
 
-    public BasicGameJson(long timePlayed, BasicConfigurationJson configuration, List<BasicPositionJson> mines,
-                         List<BasicPositionJson> flags, List<BasicPositionJson> cleared) {
-        this.timePlayed = timePlayed;
+    public BasicGameJson(long gameCreateTime, long elapsedTime, BasicConfigurationJson configuration,
+                         List<BasicPositionJson> mines, List<BasicPositionJson> flags, List<BasicPositionJson> cleared) {
+        this.gameCreateTime = gameCreateTime;
+        this.elapsedTime = elapsedTime;
         this.configuration = configuration;
         this.mines = mines;
         this.flags = flags;
         this.cleared = cleared;
     }
 
-    public long timePlayed() {
-        return timePlayed;
+    public long gameCreateTime(){
+        return gameCreateTime;
+    }
+
+    public long elapsedTime() {
+        return elapsedTime;
     }
 
     public BasicConfigurationJson configuration() {

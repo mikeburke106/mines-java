@@ -32,9 +32,26 @@ public interface Game {
     void pauseGameTimer();
 
     /**
+     * @return The time at which the game was originally created
+     */
+    long gameCreateTime();
+
+    /**
      * Strategy for tracking game time.
      */
     interface TimingStrategy {
+        /**
+         * Listener for timing updates.
+         */
+        interface Listener {
+            /**
+             * Notifies listener that time has incremented.
+             *
+             * @param newTime The new time
+             */
+            void timeUpdate(long newTime);
+        }
+
         /**
          * Starts tracking game time.
          */

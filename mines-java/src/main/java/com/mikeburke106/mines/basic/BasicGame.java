@@ -12,10 +12,12 @@ import com.mikeburke106.mines.model.Game;
  * Created by Mike Burke on 4/8/17.
  */
 public class BasicGame implements Game {
+    private final long gameCreateTime;
     private final Field gameField;
     private final TimingStrategy timingStrategy;
 
-    public BasicGame(Field gameField, TimingStrategy timingStrategy) {
+    public BasicGame(long gameCreateTime, Field gameField, TimingStrategy timingStrategy) {
+        this.gameCreateTime = gameCreateTime;
         this.gameField = gameField;
         this.timingStrategy = timingStrategy;
     }
@@ -38,5 +40,10 @@ public class BasicGame implements Game {
     @Override
     public void pauseGameTimer() {
         timingStrategy.pause();
+    }
+
+    @Override
+    public long gameCreateTime() {
+        return gameCreateTime;
     }
 }
