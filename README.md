@@ -1,4 +1,4 @@
-[coordinate_system]: https://github.com/mikeburke106/mines/tree/master/mines-java/docs/images/Coordinate_System.png "2D Coordinate System"
+[coordinate_system]: https://github.com/mikeburke106/mines/tree/master/docs/images/Coordinate_System.png "2D Coordinate System"
 
 # mines
 
