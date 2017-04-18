@@ -4,6 +4,8 @@ build/
 .gradle/
 gradlew
 gradlew.bat
+local.properties
+*.iml
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
