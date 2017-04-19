@@ -3,7 +3,7 @@ package com.mikeburke106.mines.basic.model;/*
  * file 'LICENSE.txt', which is part of this source code package.
  */
 
-import com.mikeburke106.mines.model.Game;
+import com.mikeburke106.mines.api.model.Game;
 
 import java.util.concurrent.ThreadFactory;
 

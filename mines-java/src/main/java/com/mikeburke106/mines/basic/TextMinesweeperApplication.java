@@ -1,7 +1,8 @@
-package com.mikeburke106.mines.basic.model;
+package com.mikeburke106.mines.basic;
 
-import com.mikeburke106.mines.model.Field;
-import com.mikeburke106.mines.model.Position;
+import com.mikeburke106.mines.basic.model.*;
+import com.mikeburke106.mines.api.model.Field;
+import com.mikeburke106.mines.api.model.Position;
 
 /*
  * This file is subject to the terms and conditions defined in
@@ -14,9 +15,9 @@ import com.mikeburke106.mines.model.Position;
  * Created by Mike Burke on 4/1/17.
  */
 public class TextMinesweeperApplication {
-    private static final int FIELD_WIDTH = 10;
-    private static final int FIELD_HEIGHT = 10;
-    private static final int FIELD_NUM_MINES = 1;
+    private static final int FIELD_WIDTH = 8;
+    private static final int FIELD_HEIGHT = 16;
+    private static final int FIELD_NUM_MINES = 50;
 
     public static void main(String args[]) throws Field.Configuration.InvalidConfigurationException {
         int width = FIELD_WIDTH;

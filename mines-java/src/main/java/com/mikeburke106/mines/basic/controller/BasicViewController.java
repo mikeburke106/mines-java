@@ -4,8 +4,8 @@ package com.mikeburke106.mines.basic.controller;/*
  */
 
 import com.mikeburke106.mines.basic.view.BasicMinesView;
-import com.mikeburke106.mines.controller.ViewController;
-import com.mikeburke106.mines.model.GameControlStrategy;
+import com.mikeburke106.mines.api.controller.ViewController;
+import com.mikeburke106.mines.api.model.GameControlStrategy;
 
 /**
  * Created by Mike Burke on 4/8/17.

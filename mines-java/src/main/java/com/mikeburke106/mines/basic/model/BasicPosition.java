@@ -1,6 +1,6 @@
 package com.mikeburke106.mines.basic.model;
 
-import com.mikeburke106.mines.model.Position;
+import com.mikeburke106.mines.api.model.Position;
 
 /*
  * This file is subject to the terms and conditions defined in

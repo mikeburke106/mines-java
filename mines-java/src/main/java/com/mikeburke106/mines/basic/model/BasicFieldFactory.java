@@ -1,7 +1,7 @@
 package com.mikeburke106.mines.basic.model;
 
-import com.mikeburke106.mines.model.Field;
-import com.mikeburke106.mines.model.Position;
+import com.mikeburke106.mines.api.model.Field;
+import com.mikeburke106.mines.api.model.Position;
 
 import java.util.HashSet;
 import java.util.Set;

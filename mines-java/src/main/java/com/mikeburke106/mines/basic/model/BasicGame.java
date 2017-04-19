@@ -1,7 +1,7 @@
 package com.mikeburke106.mines.basic.model;
 
-import com.mikeburke106.mines.model.Field;
-import com.mikeburke106.mines.model.Game;
+import com.mikeburke106.mines.api.model.Field;
+import com.mikeburke106.mines.api.model.Game;
 
 /*
  * This file is subject to the terms and conditions defined in
