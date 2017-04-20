@@ -1,63 +1,30 @@
-package com.mikeburke106.mines.View;/*
+package com.mikeburke106.mines.api.view;
+
+/*
  * This file is subject to the terms and conditions defined in
  * file 'LICENSE.txt', which is part of this source code package.
  */
 
+import com.mikeburke106.mines.api.model.GameControlStrategy;
+
 /**
+ * Interface definition of a view that contains the entire
+ * <p>
  * Created by Mike Burke on 4/8/17.
  */
-public interface MinesView {
+public interface MinesView extends GameControlStrategy.Listener {
+    enum ButtonValue{
+        NEW_GAME,
+        SAVE_GAME,
+        RESTORE_GAME,
+        RESTART_GAME,
+        END_GAME,
+        ;
+    }
+
     interface Listener {
-        void clearRequest(int x, int y);
-
-        void flagRequest(int x, int y);
-
-        void newGame();
-
-        void endGame();
-
-        void restartGame();
-
-        void saveGame(String filename);
-
-        void restoreGame(String filename);
-
-        Listener DEFAULT = new Listener() {
-            @Override
-            public void clearRequest(int x, int y) {
-            }
-
-            @Override
-            public void flagRequest(int x, int y) {
-            }
-
-            @Override
-            public void newGame() {
-            }
-
-            @Override
-            public void endGame() {
-            }
-
-            @Override
-            public void restartGame() {
-            }
-
-            @Override
-            public void saveGame(String filename) {
-            }
-
-            @Override
-            public void restoreGame(String filename) {
-            }
-        };
-    }
-
-    interface ItemClickListener {
         void onItemClicked(int x, int y);
-
         void onItemLongClicked(int x, int y);
+        void onButtonClicked(ButtonValue buttonValue);
     }
-
-    void setListener(Listener listener);
 }

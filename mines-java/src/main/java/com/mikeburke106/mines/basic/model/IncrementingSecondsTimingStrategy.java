@@ -17,8 +17,8 @@ public class IncrementingSecondsTimingStrategy implements Game.TimingStrategy {
     private Thread timerThread;
     private boolean running;
 
-    public IncrementingSecondsTimingStrategy(Listener listener) {
-        this(0L, new ThreadFactory() {
+    public IncrementingSecondsTimingStrategy(int secondsIncrement, Listener listener) {
+        this(secondsIncrement, 0L, new ThreadFactory() {
             @Override
             public Thread newThread(Runnable r) {
                 return new Thread(r);
@@ -26,8 +26,8 @@ public class IncrementingSecondsTimingStrategy implements Game.TimingStrategy {
         }, listener);
     }
 
-    public IncrementingSecondsTimingStrategy(long startTime, ThreadFactory threadFactory, Listener listener) {
-        this.timerRunnable = new IncrementingSecondsRunnable(startTime, listener);
+    public IncrementingSecondsTimingStrategy(int secondsIncrement, long startTime, ThreadFactory threadFactory, Listener listener) {
+        this.timerRunnable = new IncrementingSecondsRunnable(secondsIncrement, startTime, listener);
         this.threadFactory = threadFactory;
     }
 
@@ -58,10 +58,12 @@ public class IncrementingSecondsTimingStrategy implements Game.TimingStrategy {
         private static final int INTERVAL = 50;
 
         private volatile long currentTime;
+        private final int secondsIncrement;
         private Listener listener;
         private boolean running;
 
-        public IncrementingSecondsRunnable(long startTime, Listener listener) {
+        public IncrementingSecondsRunnable(int secondsIncrement, long startTime, Listener listener) {
+            this.secondsIncrement = secondsIncrement;
             this.currentTime = startTime;
             this.listener = listener;
         }
@@ -74,7 +76,7 @@ public class IncrementingSecondsTimingStrategy implements Game.TimingStrategy {
                     Thread.sleep(INTERVAL);
                     currentTime += INTERVAL;
 
-                    if ((currentTime % 1000) == 0) {
+                    if ((currentTime % (secondsIncrement * 1000)) == 0) {
                         listener.timeUpdate(currentTime);
                     }
                 }
