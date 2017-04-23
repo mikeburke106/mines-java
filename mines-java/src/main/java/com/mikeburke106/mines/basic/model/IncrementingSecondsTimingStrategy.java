@@ -17,13 +17,17 @@ public class IncrementingSecondsTimingStrategy implements Game.TimingStrategy {
     private Thread timerThread;
     private boolean running;
 
-    public IncrementingSecondsTimingStrategy(int secondsIncrement, Listener listener) {
+    public IncrementingSecondsTimingStrategy(int secondsIncrement) {
+        this(secondsIncrement, 0L);
+    }
+
+    public IncrementingSecondsTimingStrategy(int secondsIncrement, long startTime) {
         this(secondsIncrement, 0L, new ThreadFactory() {
             @Override
             public Thread newThread(Runnable r) {
                 return new Thread(r);
             }
-        }, listener);
+        }, Game.TimingStrategy.Listener.DEFAULT);
     }
 
     public IncrementingSecondsTimingStrategy(int secondsIncrement, long startTime, ThreadFactory threadFactory, Listener listener) {
@@ -52,6 +56,11 @@ public class IncrementingSecondsTimingStrategy implements Game.TimingStrategy {
     @Override
     public long getCurrentTime() {
         return timerRunnable.currentTime;
+    }
+
+    @Override
+    public void setListener(Listener listener) {
+        this.timerRunnable.listener = listener;
     }
 
     static class IncrementingSecondsRunnable implements Runnable {

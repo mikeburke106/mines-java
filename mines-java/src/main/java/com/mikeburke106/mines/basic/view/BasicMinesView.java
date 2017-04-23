@@ -100,7 +100,7 @@ public class BasicMinesView implements MinesView {
         }
     }
 
-    private static class PositionView {
+    public static class PositionView {
         enum Value {
             UNKNOWN(' '),
             FLAG('P'),

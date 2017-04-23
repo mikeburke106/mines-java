@@ -1,8 +1,12 @@
 package com.mikeburke106.mines.basic;
 
+import com.mikeburke106.mines.api.model.*;
+import com.mikeburke106.mines.basic.controller.BasicGameController;
+import com.mikeburke106.mines.basic.controller.BasicViewController;
 import com.mikeburke106.mines.basic.model.*;
-import com.mikeburke106.mines.api.model.Field;
-import com.mikeburke106.mines.api.model.Position;
+import com.mikeburke106.mines.basic.view.BasicMinesView;
+
+import java.util.concurrent.ThreadFactory;
 
 /*
  * This file is subject to the terms and conditions defined in
@@ -38,5 +42,26 @@ public class TextMinesweeperApplication {
         System.out.println("\n\nNew field: (" + width + "x" + height + "), " + numMines + " mines\n");
         Field field = fieldfactory.newInstance(configuration);
         System.out.println(field.toString());
+
+        Game.TimingStrategy.Factory timingStrategyFactory = new Game.TimingStrategy.Factory() {
+            @Override
+            public Game.TimingStrategy newInstance(long startTime) {
+                return new IncrementingSecondsTimingStrategy(5000, startTime);
+            }
+        };
+
+        GamePersistStrategy filePersistStrategy = null;
+
+
+        Game.Factory gameFactory = new BasicGame.Factory(timingStrategyFactory);
+        GameControlStrategy.Factory gameControllerFactory = new BasicGameController.Factory(gameFactory, positionPool, filePersistStrategy);
+        BasicViewController controller = new BasicViewController(gameControllerFactory);
+        BasicMinesView minesView = new BasicMinesView(generatePositionViewGrid(), width, height, controller);
+
+
+    }
+
+    private static BasicMinesView.PositionView[][] generatePositionViewGrid(int width, int height) {
+        return new BasicMinesView.PositionView[0][0];
     }
 }

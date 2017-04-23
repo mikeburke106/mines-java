@@ -48,4 +48,18 @@ public class BasicGame implements Game {
     public long gameCreateTime() {
         return gameCreateTime;
     }
+
+    public static class Factory implements Game.Factory {
+
+        private TimingStrategy.Factory timingStrategyFactory;
+
+        public Factory(TimingStrategy.Factory timingStrategyFactory) {
+            this.timingStrategyFactory = timingStrategyFactory;
+        }
+
+        @Override
+        public Game newGame(Field gameField, long startTime) {
+            return new BasicGame(System.currentTimeMillis(), gameField, timingStrategyFactory.newInstance(startTime));
+        }
+    }
 }

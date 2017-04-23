@@ -23,6 +23,12 @@ public class BasicGameController implements GameControlStrategy {
     private Position.Pool positionPool;
     private GamePersistStrategy gamePersistStrategy;
 
+    public BasicGameController(Game.Factory gameFactory, Position.Pool positionPool, GamePersistStrategy gamePersistStrategy) {
+        this.gameFactory = gameFactory;
+        this.positionPool = positionPool;
+        this.gamePersistStrategy = gamePersistStrategy;
+    }
+
     @Override
     public void clear(int x, int y) {
         game.field().clear(positionPool.atLocation(x, y));
@@ -41,5 +47,28 @@ public class BasicGameController implements GameControlStrategy {
     @Override
     public void restoreGame(String filename) throws IOException {
         // TODO
+    }
+
+    public static class Factory implements GameControlStrategy.Factory {
+        private Game.Factory gameFactory;
+        private Position.Pool positionPool;
+        private GamePersistStrategy gamePersistStrategy;
+
+        public Factory(Game.Factory gameFactory, Position.Pool positionPool, GamePersistStrategy gamePersistStrategy) {
+            this.gameFactory = gameFactory;
+            this.positionPool = positionPool;
+            this.gamePersistStrategy = gamePersistStrategy;
+        }
+
+        @Override
+        public GameControlStrategy newInstance() {
+            return new BasicGameController(gameFactory, positionPool, gamePersistStrategy);
+        }
+
+        @Override
+        public GameControlStrategy newInstance(GameControlStrategy copy) {
+            // TODO
+            throw new UnsupportedOperationException();
+        }
     }
 }

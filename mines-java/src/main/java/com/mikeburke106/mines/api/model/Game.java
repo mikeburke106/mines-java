@@ -40,6 +40,10 @@ public interface Game {
      * Strategy for tracking game time.
      */
     interface TimingStrategy {
+        interface Factory {
+            TimingStrategy newInstance(long startTime);
+        }
+
         /**
          * Listener for timing updates.
          */
@@ -50,6 +54,13 @@ public interface Game {
              * @param newTime The new time
              */
             void timeUpdate(long newTime);
+
+            Listener DEFAULT = new Listener() {
+                @Override
+                public void timeUpdate(long newTime) {
+                  /* do nothing */
+                }
+            };
         }
 
         /**
@@ -66,6 +77,8 @@ public interface Game {
          * @return The current game time
          */
         long getCurrentTime();
+
+        void setListener(Listener listener);
     }
 
     /**
