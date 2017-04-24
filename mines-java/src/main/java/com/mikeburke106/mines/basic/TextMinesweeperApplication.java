@@ -1,11 +1,14 @@
 package com.mikeburke106.mines.basic;
 
 import com.mikeburke106.mines.api.model.*;
+import com.mikeburke106.mines.api.view.MinesView;
 import com.mikeburke106.mines.basic.controller.BasicGameController;
 import com.mikeburke106.mines.basic.controller.BasicViewController;
 import com.mikeburke106.mines.basic.model.*;
 import com.mikeburke106.mines.basic.view.BasicMinesView;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ThreadFactory;
 
 /*
@@ -21,9 +24,9 @@ import java.util.concurrent.ThreadFactory;
 public class TextMinesweeperApplication {
     private static final int FIELD_WIDTH = 8;
     private static final int FIELD_HEIGHT = 16;
-    private static final int FIELD_NUM_MINES = 50;
+    private static final int FIELD_NUM_MINES = 25;
 
-    public static void main(String args[]) throws Field.Configuration.InvalidConfigurationException {
+    public static void main(String args[]) throws Field.Configuration.InvalidConfigurationException, InterruptedException {
         int width = FIELD_WIDTH;
         int height = FIELD_HEIGHT;
         int numMines = FIELD_NUM_MINES;
@@ -35,33 +38,56 @@ public class TextMinesweeperApplication {
         }
 
         final Position.Pool positionPool = new BasicPositionPool(new BasicPosition.Factory(), width, height);
-        Position.Provider.Factory positionProviderFactory = new RandomPositionProvider.Factory();
-        Field.Factory fieldfactory = new BasicFieldFactory(positionProviderFactory);
-        Field.Configuration configuration = new BasicConfiguration(positionPool, numMines);
 
-        System.out.println("\n\nNew field: (" + width + "x" + height + "), " + numMines + " mines\n");
-        Field field = fieldfactory.newInstance(configuration);
-        System.out.println(field.toString());
+        Position.Provider.Factory positionProviderFactory = new RandomPositionProvider.Factory();
+        Field.Configuration configuration = new BasicConfiguration(positionPool, numMines);
 
         Game.TimingStrategy.Factory timingStrategyFactory = new Game.TimingStrategy.Factory() {
             @Override
             public Game.TimingStrategy newInstance(long startTime) {
-                return new IncrementingSecondsTimingStrategy(5000, startTime);
+                return new IncrementingSecondsTimingStrategy(1, startTime);
             }
         };
 
         GamePersistStrategy filePersistStrategy = null;
 
+        final long startTime = 0L;
 
-        Game.Factory gameFactory = new BasicGame.Factory(timingStrategyFactory);
-        GameControlStrategy.Factory gameControllerFactory = new BasicGameController.Factory(gameFactory, positionPool, filePersistStrategy);
-        BasicViewController controller = new BasicViewController(gameControllerFactory);
-        BasicMinesView minesView = new BasicMinesView(generatePositionViewGrid(), width, height, controller);
+        while (true) {
+            System.out.println("\n\nstarting a new game!!\n\n");
 
+            final Map<Position, BasicMinesView.PositionView> positionPositionViewMap = new HashMap<>(width * height);
+            createPositionViews(positionPool, positionPositionViewMap);
 
+            Field gameField = new BasicFieldFactory(positionProviderFactory).newInstance(configuration);
+            System.out.println(gameField.toString());
+            Game.Factory gameFactory = new BasicGame.Factory(timingStrategyFactory);
+            Game game = gameFactory.newGame(gameField, startTime);
+            GameControlStrategy.Factory gameControllerFactory = new BasicGameController.Factory(game, positionPool, filePersistStrategy);
+            BasicViewController controller = new BasicViewController(gameControllerFactory);
+            BasicMinesView minesView = new BasicMinesView(positionPositionViewMap, positionPool, startTime, controller);
+
+            // start the game
+            minesView.buttonPress(MinesView.ButtonValue.NEW_GAME);
+            controller.setGameListener(minesView);
+            game.startGameTimer();
+
+            for (Position clicked : positionPool) {
+                Thread.sleep(1500L);
+                controller.onItemClicked(clicked.x(), clicked.y());
+                if(controller.isGameOver()){
+                    break;
+                }
+            }
+
+            Thread.sleep(3000L);
+        }
     }
 
-    private static BasicMinesView.PositionView[][] generatePositionViewGrid(int width, int height) {
-        return new BasicMinesView.PositionView[0][0];
+    private static void createPositionViews(Position.Pool positionPool, Map<Position, BasicMinesView.PositionView> positionPositionViewMap) {
+        for (Position position : positionPool) {
+            BasicMinesView.PositionView positionView = new BasicMinesView.PositionView();
+            positionPositionViewMap.put(position, positionView);
+        }
     }
 }

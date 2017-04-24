@@ -81,4 +81,14 @@ public class BasicViewController implements ViewController {
     private void endGame() {
         // TODO
     }
+
+    @Override
+    public void setGameListener(GameControlStrategy.Listener listener) {
+        this.gameControlStrategy.setListener(listener);
+    }
+
+    @Override
+    public boolean isGameOver() {
+        return gameControlStrategy.isGameOver();
+    }
 }

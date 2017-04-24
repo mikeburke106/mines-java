@@ -22,7 +22,7 @@ public class IncrementingSecondsTimingStrategy implements Game.TimingStrategy {
     }
 
     public IncrementingSecondsTimingStrategy(int secondsIncrement, long startTime) {
-        this(secondsIncrement, 0L, new ThreadFactory() {
+        this(secondsIncrement, startTime, new ThreadFactory() {
             @Override
             public Thread newThread(Runnable r) {
                 return new Thread(r);

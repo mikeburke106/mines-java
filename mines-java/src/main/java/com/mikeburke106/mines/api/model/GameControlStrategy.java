@@ -17,7 +17,7 @@ public interface GameControlStrategy {
     /**
      * Interface definition for a listener of the game controller.
      */
-    interface Listener {
+    interface Listener extends Game.TimingStrategy.Listener{
         /**
          * Callback for when the associated position has been cleared successfully.
          *
@@ -50,13 +50,6 @@ public interface GameControlStrategy {
          * @param y The position's y-coordinate
          */
         void positionUnflagged(int x, int y);
-
-        /**
-         * Callback for game time updates.
-         *
-         * @param time The updated game time
-         */
-        void timeUpdate(long time);
 
         /**
          * Callback for when the game has been completed successfully.
@@ -106,6 +99,7 @@ public interface GameControlStrategy {
      * @param y
      */
     void toggleFlag(int x, int y);
+
     /**
      * Saves the game to persistent storage.
      *
@@ -121,5 +115,17 @@ public interface GameControlStrategy {
      * @throws IOException When some kind of IO operation fails
      */
     void restoreGame(String filename) throws IOException;
+
+    /**
+     * Sets a listener for the game controller.
+     *
+     * @param listener The callback listener
+     */
+    void setListener(Listener listener);
+
+    /**
+     * @return Whether or not the game is over
+     */
+    boolean isGameOver();
 
 }

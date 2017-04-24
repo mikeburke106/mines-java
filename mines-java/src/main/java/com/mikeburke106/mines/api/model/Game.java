@@ -37,6 +37,11 @@ public interface Game {
     long gameCreateTime();
 
     /**
+     * @return The timing strategy
+     */
+    TimingStrategy timingStrategy();
+
+    /**
      * Strategy for tracking game time.
      */
     interface TimingStrategy {

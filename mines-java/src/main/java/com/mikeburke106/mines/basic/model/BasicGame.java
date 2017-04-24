@@ -49,6 +49,11 @@ public class BasicGame implements Game {
         return gameCreateTime;
     }
 
+    @Override
+    public TimingStrategy timingStrategy() {
+        return this.timingStrategy;
+    }
+
     public static class Factory implements Game.Factory {
 
         private TimingStrategy.Factory timingStrategyFactory;

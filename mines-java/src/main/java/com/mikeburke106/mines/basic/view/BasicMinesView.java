@@ -3,37 +3,49 @@ package com.mikeburke106.mines.basic.view;/*
  * file 'LICENSE.txt', which is part of this source code package.
  */
 
+import com.mikeburke106.mines.api.model.Position;
 import com.mikeburke106.mines.api.view.MinesView;
+
+import java.util.Map;
 
 /**
  * Created by Mike Burke on 4/8/17.
  */
 public class BasicMinesView implements MinesView {
     private Listener listener;
-    private PositionView[][] positionViewGrid;
+    private Map<Position, PositionView> positionViewMap;
+    private Position.Pool positionPool;
     private boolean gameOver;
-    private int width;
-    private int height;
     private TimeView timeView;
     private GameOverView gameOverView;
 
-    public BasicMinesView(PositionView[][] positionViewGrid, int width, int height, Listener listener) {
-        this.positionViewGrid = positionViewGrid;
-        this.width = width;
-        this.height = height;
+    public BasicMinesView(Map<Position, PositionView> positionViewMap, Position.Pool positionPool, Listener listener) {
+        this(positionViewMap, positionPool, 0L, listener);
+    }
+
+    public BasicMinesView(Map<Position, PositionView> positionViewMap, Position.Pool positionPool, long startTime,
+                          Listener listener) {
+        this.positionViewMap = positionViewMap;
+        this.positionPool = positionPool;
         this.listener = listener;
 
-        timeView = new TimeView();
+        timeView = new TimeView(startTime);
         gameOverView = new GameOverView();
     }
 
     public void buttonPress(MinesView.ButtonValue buttonValue) {
         listener.onButtonClicked(buttonValue);
+        redraw();
+    }
+
+    private PositionView getPositionView(int x, int y) {
+        Position position = positionPool.atLocation(x, y);
+        return positionViewMap.get(position);
     }
 
     @Override
     public void positionCleared(int x, int y, int adjacent) {
-        PositionView positionView = positionViewGrid[x][y];
+        PositionView positionView = getPositionView(x, y);
         positionView.cleared = true;
         positionView.value = PositionView.Value.forAdjacentMines(adjacent);
         redraw();
@@ -41,7 +53,7 @@ public class BasicMinesView implements MinesView {
 
     @Override
     public void positionExploded(int x, int y) {
-        PositionView positionView = positionViewGrid[x][y];
+        PositionView positionView = getPositionView(x, y);
         positionView.cleared = true;
         positionView.value = PositionView.Value.MINE;
         redraw();
@@ -49,7 +61,7 @@ public class BasicMinesView implements MinesView {
 
     @Override
     public void positionFlagged(int x, int y) {
-        PositionView positionView = positionViewGrid[x][y];
+        PositionView positionView = getPositionView(x, y);
         positionView.flagged = true;
         positionView.value = PositionView.Value.FLAG;
         redraw();
@@ -57,7 +69,7 @@ public class BasicMinesView implements MinesView {
 
     @Override
     public void positionUnflagged(int x, int y) {
-        PositionView positionView = positionViewGrid[x][y];
+        PositionView positionView = getPositionView(x, y);
         positionView.flagged = false;
         positionView.value = PositionView.Value.FLAG;
         redraw();
@@ -73,30 +85,31 @@ public class BasicMinesView implements MinesView {
     public void gameWon() {
         gameOver = true;
         gameOverView.gameOverText = "YOU WON!";
-        redraw();
+        System.out.println("\n\n" + gameOverView.toString() + "\n\n");
     }
 
     @Override
     public void gameLost() {
         gameOver = true;
         gameOverView.gameOverText = "YOU LOST!";
-        redraw();
+        System.out.println("\n\n" + gameOverView.toString() + "\n\n");
     }
 
     private void redraw() {
-        System.out.println("\n\n");
+        System.out.println("\n");
 
-        if (gameOver) {
-            System.out.println(gameOverView.toString());
-        } else {
-            for (int dy = 0; dy < height; dy++) {
-                for (int dx = 0; dx < width; dx++) {
-                    PositionView thisPosition = positionViewGrid[dx][dy];
-                    System.out.println(thisPosition.toString());
-                }
-                System.out.print("\n");
+        if (!gameOver) {
+            int i = 0;
+            for (Position position : positionPool) {
+                PositionView thisPosition = positionViewMap.get(position);
+                System.out.print((i == 0 ? "\n" : "") + thisPosition.toString());
+
+                final int maybeNextI = i + 1;
+                final int width = positionPool.width();
+                i = (maybeNextI % width) == 0 ? 0 : maybeNextI;
             }
-            System.out.println(timeView.toString());
+
+            System.out.println("\n\n\t\t" + timeView.toString() + "\n\n");
         }
     }
 
@@ -173,9 +186,13 @@ public class BasicMinesView implements MinesView {
     private static class TimeView {
         private long time;
 
+        TimeView(long time) {
+            this.time = time;
+        }
+
         @Override
         public String toString() {
-            return String.valueOf(time);
+            return String.valueOf(time/1000);
         }
     }
 
