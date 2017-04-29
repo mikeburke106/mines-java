@@ -78,7 +78,7 @@ public class BasicMinesView implements MinesView {
     @Override
     public void timeUpdate(long time) {
         timeView.time = time;
-        redraw();
+//        redraw();
     }
 
     @Override
@@ -95,7 +95,7 @@ public class BasicMinesView implements MinesView {
         System.out.println("\n\n" + gameOverView.toString() + "\n\n");
     }
 
-    private void redraw() {
+    private synchronized void redraw() {
         System.out.println("\n");
 
         if (!gameOver) {

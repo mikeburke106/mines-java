@@ -1,5 +1,6 @@
 package com.mikeburke106.mines.basic;
 
+import com.mikeburke106.mines.api.controller.ViewController;
 import com.mikeburke106.mines.api.model.*;
 import com.mikeburke106.mines.api.view.MinesView;
 import com.mikeburke106.mines.basic.controller.BasicGameController;
@@ -7,8 +8,10 @@ import com.mikeburke106.mines.basic.controller.BasicViewController;
 import com.mikeburke106.mines.basic.model.*;
 import com.mikeburke106.mines.basic.view.BasicMinesView;
 
+import java.io.Console;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.concurrent.ThreadFactory;
 
 /*
@@ -45,7 +48,7 @@ public class TextMinesweeperApplication {
         Game.TimingStrategy.Factory timingStrategyFactory = new Game.TimingStrategy.Factory() {
             @Override
             public Game.TimingStrategy newInstance(long startTime) {
-                return new IncrementingSecondsTimingStrategy(1, startTime);
+                return new IncrementingSecondsTimingStrategy(3, startTime);
             }
         };
 
@@ -72,15 +75,42 @@ public class TextMinesweeperApplication {
             controller.setGameListener(minesView);
             game.startGameTimer();
 
-            for (Position clicked : positionPool) {
-                Thread.sleep(1500L);
-                controller.onItemClicked(clicked.x(), clicked.y());
-                if(controller.isGameOver()){
-                    break;
+//            for (Position clicked : positionPool) {
+//                Thread.sleep(1500L);
+//                controller.onItemClicked(clicked.x(), clicked.y());
+//                if(controller.isGameOver()){
+//                    break;
+//                }
+//            }
+//
+//            Thread.sleep(3000L);
+
+            loopUserInput(controller, width, height);
+        }
+    }
+
+    private static void loopUserInput(ViewController controller, int width, int height) {
+        Scanner scanner = new Scanner(System.in);
+
+        while (!controller.isGameOver()) {
+            System.out.println("Make a move:");
+            String input = scanner.nextLine();
+            System.out.println("Got input: " + input);
+            String[] inputs = input.split(" ");
+
+            final char cmd = inputs[0].charAt(0);
+            final int x = Integer.parseInt(inputs[1]);
+            final int y = Integer.parseInt(inputs[2]);
+
+            if (x < 0 || x >= width || y < 0 || y >= height || (cmd != 'c' && cmd != 'f')) {
+                System.out.println("Invalid input.  Try again.");
+            } else {
+                if (cmd == 'c') {
+                    controller.onItemClicked(x, y);
+                } else if (cmd == 'f') {
+                    controller.onItemLongClicked(x, y);
                 }
             }
-
-            Thread.sleep(3000L);
         }
     }
 

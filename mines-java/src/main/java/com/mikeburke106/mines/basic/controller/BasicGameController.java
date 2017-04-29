@@ -83,7 +83,12 @@ public class BasicGameController implements GameControlStrategy {
 
     @Override
     public void toggleFlag(int x, int y) {
-        game.field().flag(positionPool.atLocation(x, y));
+        boolean isFlagged = game.field().flag(positionPool.atLocation(x, y));
+        if (isFlagged) {
+            listener.positionFlagged(x, y);
+        } else {
+            listener.positionUnflagged(x, y);
+        }
     }
 
     @Override
