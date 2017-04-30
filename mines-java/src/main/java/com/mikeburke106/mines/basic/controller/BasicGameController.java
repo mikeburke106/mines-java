@@ -44,6 +44,7 @@ public class BasicGameController implements GameControlStrategy {
         }
     }
 
+    // TODO: this strategy should be injected
     private int calculateAdjacent(Position position) {
         int adjacent = 0;
 

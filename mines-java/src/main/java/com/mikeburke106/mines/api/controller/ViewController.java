@@ -9,6 +9,9 @@ import com.mikeburke106.mines.api.model.GameControlStrategy;
 import com.mikeburke106.mines.api.view.MinesView;
 
 /**
+ * Definition of a view controller that will listen to the view and handle
+ * the interface with the game controller.
+ * <p>
  * Created by Mike Burke on 4/20/17.
  */
 public interface ViewController extends MinesView.Listener {

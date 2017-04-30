@@ -12,6 +12,8 @@ import com.mikeburke106.mines.api.view.MinesView;
 import java.io.IOException;
 
 /**
+ * Basic implementation of a view controller.
+ * <p>
  * Created by Mike Burke on 4/19/17.
  */
 public class BasicViewController implements ViewController {
@@ -24,20 +26,20 @@ public class BasicViewController implements ViewController {
     }
 
     @Override
-    public void onItemClicked(int x, int y) {
+    public void onPositionClicked(int x, int y) {
         this.gameControlStrategy.clear(x, y);
     }
 
     @Override
-    public void onItemLongClicked(int x, int y) {
+    public void onPositionLongClicked(int x, int y) {
         this.gameControlStrategy.toggleFlag(x, y);
     }
 
     @Override
-    public void onButtonClicked(MinesView.ButtonValue buttonValue) {
-        switch (buttonValue) {
+    public void onInputValueClicked(MinesView.InputValue inputValue) {
+        switch (inputValue) {
             case NEW_GAME:
-                gameControlStrategy = gameControlStrategyFactory.newInstance();
+                newGame();
                 break;
             case SAVE_GAME:
                 saveGame();
@@ -52,6 +54,10 @@ public class BasicViewController implements ViewController {
                 endGame();
                 break;
         }
+    }
+
+    private void newGame() {
+        gameControlStrategy = gameControlStrategyFactory.newInstance();
     }
 
     private void saveGame() {

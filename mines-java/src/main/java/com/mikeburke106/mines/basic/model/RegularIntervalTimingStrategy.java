@@ -8,21 +8,35 @@ import com.mikeburke106.mines.api.model.Game;
 import java.util.concurrent.ThreadFactory;
 
 /**
+ * Timing strategy which starts at a particular time and counts
+ * up at a regular interval.
+ * <p>
  * Created by Mike Burke on 4/8/17.
  */
-public class IncrementingSecondsTimingStrategy implements Game.TimingStrategy {
+public class RegularIntervalTimingStrategy implements Game.TimingStrategy {
 
     private final IncrementingSecondsRunnable timerRunnable;
     private ThreadFactory threadFactory;
     private Thread timerThread;
     private boolean running;
 
-    public IncrementingSecondsTimingStrategy(int secondsIncrement) {
-        this(secondsIncrement, 0L);
+    /**
+     * Constructor.  Assumes a start time of 0.
+     *
+     * @param interval Duration between time updates (in milliseconds)
+     */
+    public RegularIntervalTimingStrategy(long interval) {
+        this(interval, 0L);
     }
 
-    public IncrementingSecondsTimingStrategy(int secondsIncrement, long startTime) {
-        this(secondsIncrement, startTime, new ThreadFactory() {
+    /**
+     * Constructor.  Assumes a generic thread factory and listener.
+     *
+     * @param interval  Duration between time updates (in milliseconds)
+     * @param startTime Start offset of the timer (in milliseconds)
+     */
+    public RegularIntervalTimingStrategy(long interval, long startTime) {
+        this(interval, startTime, new ThreadFactory() {
             @Override
             public Thread newThread(Runnable r) {
                 return new Thread(r);
@@ -30,8 +44,16 @@ public class IncrementingSecondsTimingStrategy implements Game.TimingStrategy {
         }, Game.TimingStrategy.Listener.DEFAULT);
     }
 
-    public IncrementingSecondsTimingStrategy(int secondsIncrement, long startTime, ThreadFactory threadFactory, Listener listener) {
-        this.timerRunnable = new IncrementingSecondsRunnable(secondsIncrement, startTime, listener);
+    /**
+     * Constructor.
+     *
+     * @param interval      Duration between time updates (in milliseconds)
+     * @param startTime     Start offset of the timer (in milliseconds)
+     * @param threadFactory Factory for creating timer threads
+     * @param listener      Listener to be notified of interval updates
+     */
+    public RegularIntervalTimingStrategy(long interval, long startTime, ThreadFactory threadFactory, Listener listener) {
+        this.timerRunnable = new IncrementingSecondsRunnable(interval, startTime, listener);
         this.threadFactory = threadFactory;
     }
 
@@ -67,12 +89,12 @@ public class IncrementingSecondsTimingStrategy implements Game.TimingStrategy {
         private static final int INTERVAL = 50;
 
         private volatile long currentTime;
-        private final int secondsIncrement;
+        private final long interval;
         private Listener listener;
         private boolean running;
 
-        public IncrementingSecondsRunnable(int secondsIncrement, long startTime, Listener listener) {
-            this.secondsIncrement = secondsIncrement;
+        public IncrementingSecondsRunnable(long interval, long startTime, Listener listener) {
+            this.interval = interval;
             this.currentTime = startTime;
             this.listener = listener;
         }
@@ -85,7 +107,7 @@ public class IncrementingSecondsTimingStrategy implements Game.TimingStrategy {
                     Thread.sleep(INTERVAL);
                     currentTime += INTERVAL;
 
-                    if ((currentTime % (secondsIncrement * 1000)) == 0) {
+                    if ((currentTime % interval) == 0) {
                         listener.timeUpdate(currentTime);
                     }
                 }

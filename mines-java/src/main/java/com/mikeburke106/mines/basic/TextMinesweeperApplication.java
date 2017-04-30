@@ -8,11 +8,9 @@ import com.mikeburke106.mines.basic.controller.BasicViewController;
 import com.mikeburke106.mines.basic.model.*;
 import com.mikeburke106.mines.basic.view.BasicMinesView;
 
-import java.io.Console;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.concurrent.ThreadFactory;
 
 /*
  * This file is subject to the terms and conditions defined in
@@ -48,7 +46,7 @@ public class TextMinesweeperApplication {
         Game.TimingStrategy.Factory timingStrategyFactory = new Game.TimingStrategy.Factory() {
             @Override
             public Game.TimingStrategy newInstance(long startTime) {
-                return new IncrementingSecondsTimingStrategy(3, startTime);
+                return new RegularIntervalTimingStrategy(1000, startTime);
             }
         };
 
@@ -71,13 +69,13 @@ public class TextMinesweeperApplication {
             BasicMinesView minesView = new BasicMinesView(positionPositionViewMap, positionPool, startTime, controller);
 
             // start the game
-            minesView.buttonPress(MinesView.ButtonValue.NEW_GAME);
+            minesView.buttonPress(MinesView.InputValue.NEW_GAME);
             controller.setGameListener(minesView);
             game.startGameTimer();
 
 //            for (Position clicked : positionPool) {
 //                Thread.sleep(1500L);
-//                controller.onItemClicked(clicked.x(), clicked.y());
+//                controller.onPositionClicked(clicked.x(), clicked.y());
 //                if(controller.isGameOver()){
 //                    break;
 //                }
@@ -106,9 +104,9 @@ public class TextMinesweeperApplication {
                 System.out.println("Invalid input.  Try again.");
             } else {
                 if (cmd == 'c') {
-                    controller.onItemClicked(x, y);
+                    controller.onPositionClicked(x, y);
                 } else if (cmd == 'f') {
-                    controller.onItemLongClicked(x, y);
+                    controller.onPositionLongClicked(x, y);
                 }
             }
         }

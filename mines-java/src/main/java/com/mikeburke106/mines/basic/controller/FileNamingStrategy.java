@@ -8,6 +8,8 @@ package com.mikeburke106.mines.basic.controller;
 import com.mikeburke106.mines.api.model.Game;
 
 /**
+ * Strategy to save files with a generated name.
+ * <p>
  * Created by Mike Burke on 4/20/17.
  */
 public class FileNamingStrategy {
@@ -17,6 +19,9 @@ public class FileNamingStrategy {
         this.game = game;
     }
 
+    /**
+     * @return The generated file name
+     */
     public String getFilename() {
         return String.valueOf(game.gameCreateTime()) +
                 "_" +

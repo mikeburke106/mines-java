@@ -45,7 +45,16 @@ public interface Game {
      * Strategy for tracking game time.
      */
     interface TimingStrategy {
+        /**
+         * Factory for creating new timing strategy instances.
+         */
         interface Factory {
+            /**
+             * Creates a new timing strategy instance.
+             *
+             * @param startTime The starting time for the timing strategy
+             * @return The new timing strategy instance
+             */
             TimingStrategy newInstance(long startTime);
         }
 
@@ -60,6 +69,9 @@ public interface Game {
              */
             void timeUpdate(long newTime);
 
+            /**
+             * Default timing strategy listener (callbacks do nothing).
+             */
             Listener DEFAULT = new Listener() {
                 @Override
                 public void timeUpdate(long newTime) {
@@ -83,6 +95,11 @@ public interface Game {
          */
         long getCurrentTime();
 
+        /**
+         * Sets a listener on the timing strategy.
+         *
+         * @param listener The listener to set
+         */
         void setListener(Listener listener);
     }
 
@@ -95,7 +112,7 @@ public interface Game {
          *
          * @param gameField Field for the game
          * @param startTime Start time of the game
-         * @return
+         * @return The new game instance
          */
         Game newGame(Field gameField, long startTime);
     }

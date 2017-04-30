@@ -9,6 +9,9 @@ import com.mikeburke106.mines.api.view.MinesView;
 import java.util.Map;
 
 /**
+ * Basic implementation of a text-based mines view,
+ * which will print state to System.out.
+ *
  * Created by Mike Burke on 4/8/17.
  */
 public class BasicMinesView implements MinesView {
@@ -33,8 +36,8 @@ public class BasicMinesView implements MinesView {
         gameOverView = new GameOverView();
     }
 
-    public void buttonPress(MinesView.ButtonValue buttonValue) {
-        listener.onButtonClicked(buttonValue);
+    public void buttonPress(InputValue inputValue) {
+        listener.onInputValueClicked(inputValue);
         redraw();
     }
 
@@ -78,7 +81,6 @@ public class BasicMinesView implements MinesView {
     @Override
     public void timeUpdate(long time) {
         timeView.time = time;
-//        redraw();
     }
 
     @Override
