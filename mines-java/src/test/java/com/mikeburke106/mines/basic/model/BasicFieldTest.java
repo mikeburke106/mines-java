@@ -35,6 +35,8 @@ public class BasicFieldTest {
     @Mock
     private BasicConfiguration mockConfiguration;
 
+    private Set<Position> mockMineSet;
+    private Set<Position> mockFlagSet;
     private Position.Pool mockPositionPool;
 
     private BasicField basicField;
@@ -43,12 +45,12 @@ public class BasicFieldTest {
     public void setup() {
         initMocks(this);
 
-        Set<Position> mockMineSet = new HashSet<>(3);
+        mockMineSet = new HashSet<>(3);
         mockMineSet.add(mockPosition1);
         mockMineSet.add(mockPosition3);
         mockMineSet.add(mockPosition4);
 
-        Set<Position> mockFlagSet = new HashSet<>(3);
+        mockFlagSet = new HashSet<>(3);
         mockFlagSet.add(mockPosition4);
         mockFlagSet.add(mockPosition5);
 
@@ -108,5 +110,20 @@ public class BasicFieldTest {
     @Test
     public void testToString() {
         assertEquals("[ ][x][ ]\n[x][x][ ]\n", basicField.toString());
+    }
+
+    @Test
+    public void testEquals() {
+        Set<Position> mineSet1 = new HashSet<>(mockMineSet);
+        Set<Position> mineSet2 = new HashSet<>(mockMineSet);
+        Set<Position> mockFlagSet1 = new HashSet<>(mockFlagSet);
+        Set<Position> mockFlagSet2 = new HashSet<>(mockFlagSet);
+        BasicField first = new BasicField(mockConfiguration, mineSet1, mockFlagSet1);
+        BasicField second = new BasicField(mockConfiguration, mineSet2, mockFlagSet2);
+        assertFalse(first == second);
+
+        // NOTE: these assertions depend on BasicPositionPool.equals implementation because equals() method can't be mocked
+        assertTrue(first.equals(second));
+        assertTrue(second.equals(first));
     }
 }

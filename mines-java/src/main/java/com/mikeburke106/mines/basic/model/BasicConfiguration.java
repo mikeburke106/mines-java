@@ -31,4 +31,31 @@ public class BasicConfiguration implements Field.Configuration {
     public int numMines() {
         return numMines;
     }
+
+    @Override
+    public String toString() {
+        return "config = " +
+                "(" + positionPool.width() +
+                "x" + positionPool.height() +
+                "), " + numMines +
+                " mines";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BasicConfiguration that = (BasicConfiguration) o;
+
+        if (numMines != that.numMines) return false;
+        return positionPool.equals(that.positionPool);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = positionPool.hashCode();
+        result = 31 * result + numMines;
+        return result;
+    }
 }

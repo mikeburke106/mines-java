@@ -69,7 +69,26 @@ public class BasicField implements Field {
         PrintStreamFieldPrintStrategy printer = new PrintStreamFieldPrintStrategy(printStream);
         printer.printField(this);
         return new String(outputStream.toByteArray(), StandardCharsets.UTF_8);
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BasicField that = (BasicField) o;
+
+        if (!configuration.equals(that.configuration)) return false;
+        if (!mines.equals(that.mines)) return false;
+        return flags.equals(that.flags);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = configuration.hashCode();
+        result = 31 * result + mines.hashCode();
+        result = 31 * result + flags.hashCode();
+        return result;
     }
 }
 

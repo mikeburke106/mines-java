@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Mike Burke on 5/6/17.
@@ -37,7 +39,7 @@ public class BasicPositionPoolTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testIllegalPoolSize() {
-        new BasicPositionPool(new Position[0], 0, 1); // IllegalArgumentException
+        new BasicPositionPool(new Position[0], 1, 1); // IllegalArgumentException
     }
 
     @Test
@@ -85,4 +87,15 @@ public class BasicPositionPoolTest {
         assertEquals(MOCK_HEIGHT, basicPositionPool.height());
     }
 
+    @Test
+    public void equals() {
+        BasicPositionPool first = new BasicPositionPool(positionArray, MOCK_WIDTH, MOCK_HEIGHT);
+        BasicPositionPool second = new BasicPositionPool(positionArray, MOCK_WIDTH, MOCK_HEIGHT);
+
+        assertFalse(first == second);
+
+        // NOTE: these assertions depend on BasicPosition.equals implementation because equals() method can't be mocked
+        assertTrue(first.equals(second));
+        assertTrue(second.equals(first));
+    }
 }

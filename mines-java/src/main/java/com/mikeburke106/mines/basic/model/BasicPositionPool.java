@@ -2,6 +2,7 @@ package com.mikeburke106.mines.basic.model;
 
 import com.mikeburke106.mines.api.model.Position;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 /*
@@ -60,6 +61,35 @@ public class BasicPositionPool implements Position.Pool {
     @Override
     public Iterator<Position> iterator() {
         return new BasicPositionPoolIterator(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BasicPositionPool positions = (BasicPositionPool) o;
+
+        if (width != positions.width) return false;
+        if (height != positions.height) return false;
+
+        final int size = pool.length;
+        for(int i=0; i<size; i++){
+            Position thisPosition = pool[i];
+            Position thatPosition = positions.pool[i];
+            if(thisPosition.getClass() != thatPosition.getClass()) return false;
+            if(!thisPosition.equals(thatPosition)) return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Arrays.hashCode(pool);
+        result = 31 * result + width;
+        result = 31 * result + height;
+        return result;
     }
 
     static class BasicPositionPoolIterator implements Iterator<Position> {

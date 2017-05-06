@@ -9,6 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Mike Burke on 5/6/17.
@@ -32,5 +34,16 @@ public class BasicPositionTest {
     @Test
     public void testY() {
         assertEquals(MOCK_Y, basicPosition.y());
+    }
+
+    @Test
+    public void testEquals() {
+        BasicPosition first = new BasicPosition(MOCK_X, MOCK_Y);
+        BasicPosition second = new BasicPosition(MOCK_X, MOCK_Y);
+
+        assertFalse(first == second);
+
+        assertTrue(first.equals(second));
+        assertTrue(second.equals(first));
     }
 }
