@@ -88,8 +88,7 @@ public class BasicPositionPool implements Position.Pool {
         private void increment() {
             currX++;
             if (endOfRow()) {
-                currY++;
-                currX = 0;
+                moveToNextRow();
             }
         }
 
@@ -97,9 +96,14 @@ public class BasicPositionPool implements Position.Pool {
             return currX == positionPool.width();
         }
 
+        private void moveToNextRow() {
+            currY++;
+            currX = 0;
+        }
+
         @Override
         public void remove() {
-            throw new RuntimeException();
+            throw new UnsupportedOperationException();
         }
     }
 
