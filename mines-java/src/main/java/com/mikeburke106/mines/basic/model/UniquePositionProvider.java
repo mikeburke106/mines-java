@@ -30,4 +30,26 @@ public abstract class UniquePositionProvider implements Position.Provider {
     protected Position take(int index) {
         return availablePositions.remove(index);
     }
+
+    @Override
+    public String toString() {
+        return "UniquePositionProvider{" +
+                "availablePositions=" + availablePositions +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UniquePositionProvider that = (UniquePositionProvider) o;
+
+        return availablePositions.equals(that.availablePositions);
+    }
+
+    @Override
+    public int hashCode() {
+        return availablePositions.hashCode();
+    }
 }

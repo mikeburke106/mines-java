@@ -42,7 +42,6 @@ public class BasicFieldFactory implements Field.Factory {
             try {
                 Position position = positionProvider.nextPosition();
                 minePositions.add(position);
-                System.out.println("Mine planted at position: " + position);
             } catch (Position.Provider.NoPositionsAvailableException e) {
                 /* should be impossible since we validated inputs, so something is clearly wrong with the point provider */
                 throw new RuntimeException("Something is wrong with the input PositionProvider.", e);

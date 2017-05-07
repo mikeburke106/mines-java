@@ -3,6 +3,7 @@ package com.mikeburke106.mines.basic.model;
 import com.mikeburke106.mines.api.model.Position;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -31,6 +32,29 @@ public class RandomPositionProvider extends UniquePositionProvider {
         }
 
         return take(random.nextInt(availablePositions.size()));
+    }
+
+    @Override
+    public String toString() {
+        return "RandomPositionProvider{" +
+                "availablePositions=\n" + Arrays.toString(availablePositions.toArray()) +
+                ", random=" + random +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RandomPositionProvider that = (RandomPositionProvider) o;
+
+        return random.equals(that.random) && super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return random.hashCode() * 31 * super.hashCode();
     }
 
     public static class Factory implements Position.Provider.Factory {

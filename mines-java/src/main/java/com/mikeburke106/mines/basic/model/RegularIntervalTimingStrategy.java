@@ -85,6 +85,31 @@ public class RegularIntervalTimingStrategy implements Game.TimingStrategy {
         this.timerRunnable.listener = listener;
     }
 
+    @Override
+    public String toString() {
+        return "RegularIntervalTimingStrategy{" +
+                "timerThread=" + timerThread +
+                "currentTime=" + timerRunnable.currentTime +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RegularIntervalTimingStrategy that = (RegularIntervalTimingStrategy) o;
+
+        return timerThread.equals(that.timerThread) &&
+                this.getCurrentTime() == that.getCurrentTime();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (timerRunnable.currentTime ^ (timerRunnable.currentTime >>> 32));
+        return 31 * result * timerThread.hashCode();
+    }
+
     static class IncrementingSecondsRunnable implements Runnable {
         private static final int INTERVAL = 50;
 

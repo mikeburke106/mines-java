@@ -54,6 +54,35 @@ public class BasicGame implements Game {
         return this.timingStrategy;
     }
 
+    @Override
+    public String toString() {
+        return "BasicGame{" +
+                "gameCreateTime=" + gameCreateTime +
+                ", gameField=\n" + gameField +
+                ", timingStrategy=" + timingStrategy +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BasicGame basicGame = (BasicGame) o;
+
+        if (gameCreateTime != basicGame.gameCreateTime) return false;
+        if (!gameField.equals(basicGame.gameField)) return false;
+        return timingStrategy.equals(basicGame.timingStrategy);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (gameCreateTime ^ (gameCreateTime >>> 32));
+        result = 31 * result + gameField.hashCode();
+        result = 31 * result + timingStrategy.hashCode();
+        return result;
+    }
+
     public static class Factory implements Game.Factory {
 
         private TimingStrategy.Factory timingStrategyFactory;

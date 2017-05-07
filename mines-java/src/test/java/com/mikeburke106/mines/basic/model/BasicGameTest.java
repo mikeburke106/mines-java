@@ -7,6 +7,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -27,7 +29,7 @@ public class BasicGameTest {
     private Field mockField;
 
     @Mock
-    private Game.TimingStrategy mockTimingStrategy;
+    private RegularIntervalTimingStrategy mockTimingStrategy;
 
     private BasicGame basicGame;
 
@@ -69,5 +71,17 @@ public class BasicGameTest {
     @Test
     public void testTimingStrategy() {
         assertEquals(mockTimingStrategy, basicGame.timingStrategy());
+    }
+
+    @Test
+    public void testEquals() {
+        BasicGame first = new BasicGame(CREATE_TIME, mockField, mockTimingStrategy);
+        BasicGame second = new BasicGame(CREATE_TIME, mockField, mockTimingStrategy);
+
+        assertFalse(first == second);
+
+        // NOTE: these assertions depend on RegularIntervalTimingStrategy.equals implementation because equals() method can't be mocked
+        assertTrue(first.equals(second));
+        assertTrue(second.equals(first));
     }
 }

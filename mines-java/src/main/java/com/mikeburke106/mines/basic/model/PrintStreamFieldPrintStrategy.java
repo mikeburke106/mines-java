@@ -39,4 +39,26 @@ public class PrintStreamFieldPrintStrategy implements FieldPrintStrategy {
             }
         }
     }
+
+    @Override
+    public String toString() {
+        return "PrintStreamFieldPrintStrategy{" +
+                "outStream=" + outStream +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PrintStreamFieldPrintStrategy that = (PrintStreamFieldPrintStrategy) o;
+
+        return outStream.equals(that.outStream);
+    }
+
+    @Override
+    public int hashCode() {
+        return outStream.hashCode();
+    }
 }
