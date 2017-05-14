@@ -1,0 +1,11 @@
+ext{
+    base_name = 'mines'
+	major_version = 1
+    minor_version = 0
+    patch_version = 0
+    build_version = 0
+	is_snapshot = false
+	classifier = is_snapshot ? '-SNAPSHOT' : ''
+	
+	version_str = sprintf('%d.%d.%d.%d%s', major_version, minor_version, patch_version, build_version, classifier)
+}

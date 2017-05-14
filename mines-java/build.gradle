@@ -1,15 +1,22 @@
-group 'com.mikeburke106'
-version '1.0-SNAPSHOT'
-
+apply from: 'gradleData/version.gradle'
 apply plugin: 'java'
 apply plugin: 'application'
 
 sourceCompatibility = 1.8
 
+group 'com.mikeburke106'
+version version_str
+
 mainClassName = 'com.mikeburke106.mines.basic.TextMinesweeperApplication'
 
 task updateWrapper(type: Wrapper) {
     gradleVersion = '3.4.1'
+}
+
+task printVersion{
+    println('***********************************')
+	println('*        version: ' + version)
+	println('***********************************')
 }
 
 repositories {
