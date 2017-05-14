@@ -15,8 +15,8 @@ task updateWrapper(type: Wrapper) {
 
 task printVersion{
     println('***********************************')
-	println('*        version: ' + version)
-	println('***********************************')
+    println('*        version: ' + version)
+    println('***********************************')
 }
 
 repositories {
