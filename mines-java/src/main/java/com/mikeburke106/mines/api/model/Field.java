@@ -112,5 +112,7 @@ public interface Field {
          * @throws Configuration.InvalidConfigurationException If any of the input parameters are invalid.
          */
         Field newInstance(Configuration configuration) throws Configuration.InvalidConfigurationException;
+
+        Field newInstance(Configuration configuration, int initialX, int initialY) throws Configuration.InvalidConfigurationException;
     }
 }

@@ -31,7 +31,7 @@ public class BasicFieldFactory implements Field.Factory {
     }
 
     @Override
-    public Field newInstance(Field.Configuration configuration) throws Field.Configuration.InvalidConfigurationException {
+    public Field newInstance(Field.Configuration configuration, int initialX, int initialY) throws Field.Configuration.InvalidConfigurationException{
         configurationValidationStrategy.validate(configuration);
 
         final Position.Provider positionProvider = positionProviderFactory.newInstance(configuration.positionPool());
@@ -41,7 +41,9 @@ public class BasicFieldFactory implements Field.Factory {
         for (int i = 0; i < configuration.numMines(); i++) {
             try {
                 Position position = positionProvider.nextPosition();
-                minePositions.add(position);
+                if(!(position.x() == initialX && position.y() == initialY)) {
+                  minePositions.add(position);
+                }
             } catch (Position.Provider.NoPositionsAvailableException e) {
                 /* should be impossible since we validated inputs, so something is clearly wrong with the point provider */
                 throw new RuntimeException("Something is wrong with the input PositionProvider.", e);
@@ -49,6 +51,11 @@ public class BasicFieldFactory implements Field.Factory {
         }
 
         return new BasicField(configuration, minePositions, flagPositions);
+    }
+
+    @Override
+    public Field newInstance(Field.Configuration configuration) throws Field.Configuration.InvalidConfigurationException {
+        return newInstance(configuration, -1, -1);
     }
 
     /**
