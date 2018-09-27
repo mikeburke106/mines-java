@@ -3,7 +3,7 @@ ext{
     major_version = 1
     minor_version = 0
     patch_version = 1
-    build_version = 1
+    build_version = 2
     is_snapshot = false
     classifier = is_snapshot ? '-SNAPSHOT' : ''
 

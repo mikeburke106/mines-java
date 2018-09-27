@@ -42,7 +42,9 @@ public class BasicFieldFactory implements Field.Factory {
             try {
                 Position position = positionProvider.nextPosition();
                 if(!(position.x() == initialX && position.y() == initialY)) {
-                  minePositions.add(position);
+                    minePositions.add(position);
+                } else {
+                    i--; // we tried to flag the designated position, so we need to try again by reducing the index counter
                 }
             } catch (Position.Provider.NoPositionsAvailableException e) {
                 /* should be impossible since we validated inputs, so something is clearly wrong with the point provider */
