@@ -24,10 +24,11 @@ repositories {
 }
 
 dependencies {
-    compile "com.fasterxml.jackson.core:jackson-core:2.8.7"
-    compile "com.fasterxml.jackson.core:jackson-annotations:2.8.7"
-    compile "com.fasterxml.jackson.core:jackson-databind:2.8.7"
+    implementation group: 'org.mockito', name: 'mockito-core', version: '2.22.0'
+    implementation "com.fasterxml.jackson.core:jackson-core:2.8.7"
+    implementation "com.fasterxml.jackson.core:jackson-annotations:2.8.7"
+    implementation "com.fasterxml.jackson.core:jackson-databind:2.8.7"
 
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:2.7.22'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.7.22'
 }

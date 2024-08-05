@@ -1,5 +1,5 @@
 *.class
-build/
+mines-java/build/
 .idea/
 .gradle/
 gradlew
